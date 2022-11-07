@@ -8,58 +8,27 @@ using UnityEngine.Events;
 
 public class DamageDealer : MonoBehaviour
 {
-    static private int _damage = 1;
-    static public int Damage { get => _damage; }
+    [Header("Damage stats")]
+    [SerializeField] private int _damage = 1;
 
-    private Hearth _tempCurrentHearth;
+    [Header("Info of current hearthes")]
+    [SerializeField] private List<Hearth> _currentHearthes;
 
-    public void TakeClickDamage()
+    public int Damage { get => _damage; }
+    public static DamageDealer _instance;
+
+    private void Awake()
     {
-        _tempCurrentHearth.GetDamage(_damage);
+        _instance = this;
     }
 
-    private bool CheckTouchMobile()
+    public static void AddHearthToList(Hearth hearth)
     {
-        if (Input.touchCount > 0)
-        {
-            foreach (Touch touch in Input.touches)
-            {
-                Vector3 touchPos = touch.position;
-                if (touch.phase == TouchPhase.Began)
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(touchPos);
-                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-                    if (hit.collider != null && hit.collider.CompareTag("Hearth"))
-                    {
-                        _tempCurrentHearth = hit.collider.GetComponent<Hearth>();
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-            }
-        }
-        return false;
+        _instance._currentHearthes.Add(hearth);
+        _instance._currentHearthes[_instance._currentHearthes.Count - 1].onDie += RemoveHearthFromList;
     }
-    private bool CheckTouchPC()
+    public static void RemoveHearthFromList(Hearth hearth)
     {
-        Vector3 touchPos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(touchPos);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-        print("Click");
-        if (hit.collider != null && hit.collider.CompareTag("Hearth"))
-        {
-            _tempCurrentHearth = hit.collider.GetComponent<Hearth>();
-            return true;
-        }
-        else
-            return false;
-    }
-
-    private void OnMouseDown()
-    {
-        if (CheckTouchPC())
-            TakeClickDamage();
+        _instance._currentHearthes.Remove(hearth);
     }
 }

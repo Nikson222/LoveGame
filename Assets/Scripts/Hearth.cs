@@ -7,7 +7,6 @@ public class Hearth : MonoBehaviour
 {
     [Header("Base stats")]
     [SerializeField] private float _health;
-    public float Health { get => _health; }
 
     [Header("Animation setting")]
     [SerializeField] private Animator _animator;
@@ -17,17 +16,27 @@ public class Hearth : MonoBehaviour
     Coroutine _isHitingCoroutine;
 
     [Header("Image setting")]
-    private Image _image;
+    private SpriteRenderer _spriteRenderer;
 
     public delegate void DamageNotify();
     public event DamageNotify onDamage;
+    public delegate void DieNotify(Hearth hearth);
+    public event DieNotify onDie;
+
+    public float Health { get => _health; }
+
 
     #region UnityMetods
 
     private void Start()
     {
-        _image = gameObject.GetComponent<Image>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _animationDuration = _scaleAnimation.length;
+    }
+
+    private void OnMouseDown()
+    {
+        GetDamage(DamageDealer._instance.Damage);
     }
 
     #endregion
@@ -48,6 +57,7 @@ public class Hearth : MonoBehaviour
 
     private void Die()
     {
+        onDie?.Invoke(this);
         Destroy(gameObject);
     }
 
@@ -59,7 +69,7 @@ public class Hearth : MonoBehaviour
 
     private void SetRandomColor()
     {
-        _image.color = RandomizeColor();
+        _spriteRenderer.color = RandomizeColor();
     }
 
     private void StartAnimation()
