@@ -33,20 +33,12 @@ public class Hearth : MonoBehaviour
     #endregion
 
     #region Metods
-    public void GetDamage()
+    public void GetDamage(int Damage)
     {
+        _health -= Damage;
 
-        if (_isHitingCoroutine != null)
-        {
-            StopCoroutine(_isHitingCoroutine);
-            _animator.SetBool(_animationHit, false);
-            _animator.Play("Empty");
-        }
-
-        _isHitingCoroutine = StartCoroutine(SetAnimationBool());
-
-        _health -= PlayerStats.Damage;
         SetRandomColor();
+        StartAnimation();
 
         onDamage?.Invoke();
 
@@ -68,6 +60,18 @@ public class Hearth : MonoBehaviour
     private void SetRandomColor()
     {
         _image.color = RandomizeColor();
+    }
+
+    private void StartAnimation()
+    {
+        if (_isHitingCoroutine != null)
+        {
+            StopCoroutine(_isHitingCoroutine);
+            _animator.SetBool(_animationHit, false);
+            _animator.Play("Empty");
+        }
+
+        _isHitingCoroutine = StartCoroutine(SetAnimationBool());
     }
     #endregion
 
