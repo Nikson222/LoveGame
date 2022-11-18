@@ -25,7 +25,6 @@ public class Hearth : MonoBehaviour
 
     public float Health { get => _health; }
 
-
     #region UnityMetods
 
     private void Start()
