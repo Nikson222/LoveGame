@@ -7,25 +7,29 @@ using UnityEngine.UI;
 public class HPBar : MonoBehaviour
 {
     private Image _filledImage;
-    [SerializeField] private GameObject _hearthesSpawner;
-    private Hearth _currentHearth;
-    private float _tempStartHealth;
+    [SerializeField] private HearthSpawner _hearthesSpawner;
+    private BigHearth _currentHearth;
+    private float _HealthCount;
 
     private void Start()
     {
         _filledImage = GetComponent<Image>();
-        _hearthesSpawner.GetComponent<HearthSpawner>().onSpawn += GetNewHearth;
+        _hearthesSpawner.OnSpawn += GetNewHearth;
     }
 
     public void GetNewHearth()
     {
-        _filledImage.fillAmount = 1;
-        _currentHearth = _hearthesSpawner.GetComponentInChildren<Hearth>();
-        _tempStartHealth = _currentHearth.Health;
-        _currentHearth.onDamage += SetFilled;
+        if (_hearthesSpawner)
+        {
+            _filledImage.fillAmount = 1;
+            _currentHearth = _hearthesSpawner.HearthesList[_hearthesSpawner.HearthesList.Count - 1];
+            _HealthCount = _currentHearth.Health;
+            _currentHearth.onDamage += SetFilled;
+        }
     }
     public void SetFilled()
     {
-        _filledImage.fillAmount = (_currentHearth.Health / _tempStartHealth);
+        
+        _filledImage.fillAmount = (_currentHearth.Health / _HealthCount);
     }
 }

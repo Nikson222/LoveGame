@@ -6,8 +6,11 @@ public class Wallet : MonoBehaviour
 {
     public static Wallet Instance;
     
-    private int _money;
+    [SerializeField] private int _money;
     public int Money { get { return _money; } }
+
+    public delegate void ChangedMoneyNotify();
+    public event ChangedMoneyNotify OnChangedMoneyNotify;
 
     private void Start()
     {
@@ -15,13 +18,15 @@ public class Wallet : MonoBehaviour
             Instance = this;
     }
 
-    private void WithdrowMoney(int value)
+    public void WithdrowMoney(int value)
     {
         _money -= value;
+        OnChangedMoneyNotify?.Invoke();
     }
 
-    private void PutMoney(int value)
+    public void PutMoney(int value)
     {
         _money += value;
+        OnChangedMoneyNotify?.Invoke();
     }
 }

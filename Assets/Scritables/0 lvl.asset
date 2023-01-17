@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7007528ad89aa4a46a4d089364d8a601, type: 3}
   m_Name: 0 lvl
   m_EditorClassIdentifier: 
-  _level: 1
+  _level: 0
   _hearthes:
-  - {fileID: 1119518166690871829, guid: 58117d2652c84e647a93a7759a351771, type: 3}
+  - {fileID: 3840190294572909555, guid: 98f4ba923afeafe4d84c79680fe7754e, type: 3}
   _prizeForDestroy: 10

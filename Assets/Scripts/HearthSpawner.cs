@@ -8,20 +8,16 @@ public class HearthSpawner : MonoBehaviour
     [SerializeField] private List<LevelConfig> _levelConfigs = new List<LevelConfig>();
     [SerializeField] private int _startLevel = 0;
 
-    private GameObject _currentHearth;
+    private List<BigHearth> _hearthesList = new List<BigHearth>();
+    public List<BigHearth> HearthesList { get => _hearthesList; private set => _hearthesList = value; }
 
     public delegate void SpawnNotify();
-    public event SpawnNotify onSpawn;
+    public event SpawnNotify OnSpawn;
 
 
     private void Start()
     {
-        Spawn(_startLevel);
-    }
-
-    private void Update()
-    {
-        if (gameObject.transform.childCount == 0)
+        if (_hearthesList.Count.Equals(0))
             Spawn(_startLevel);
     }
 
@@ -32,11 +28,8 @@ public class HearthSpawner : MonoBehaviour
 
         var _tempHearth = _levelConfigs[levelNum].Hearthes[Random.Range(0, _levelConfigs[levelNum].Hearthes.Length)];
 
-        _currentHearth = Instantiate(_tempHearth, transform.position, Quaternion.identity);
-        _currentHearth.transform.SetParent(gameObject.transform);
+        _hearthesList.Add(Instantiate(_tempHearth, transform.position, Quaternion.identity).GetComponent<BigHearth>());
 
-        DamageDealer.AddHearthToList(_currentHearth.GetComponent<Hearth>());
-
-        onSpawn?.Invoke();
+        OnSpawn?.Invoke();
     }
 }

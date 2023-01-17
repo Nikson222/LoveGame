@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Hearth : MonoBehaviour
+public class BigHearth : BaseEnemy
 {
-    [Header("Base stats")]
-    [SerializeField] private float _health;
-
     [Header("Animation setting")]
     [SerializeField] private Animator _animator;
     [SerializeField] private AnimationClip _scaleAnimation;
@@ -18,51 +14,45 @@ public class Hearth : MonoBehaviour
     [Header("Image setting")]
     private SpriteRenderer _spriteRenderer;
 
-    public delegate void DamageNotify();
-    public event DamageNotify onDamage;
-    public delegate void DieNotify(Hearth hearth);
-    public event DieNotify onDie;
-
-    public float Health { get => _health; }
+    [Header("SpawnPosition Settings")]
+    [SerializeField] private float _xOffset = 0f;
+    [SerializeField] private float _yOffset = 0f;
 
     #region UnityMetods
 
     private void Start()
     {
+        transform.position += new Vector3(_xOffset, _yOffset, 0);
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _animationDuration = _scaleAnimation.length;
     }
 
     private void OnMouseDown()
     {
-        GetDamage(DamageDealer._instance.Damage);
+        GetDamage(DamageDealer.Damage);
+        SetRandomColor();
+        StartAnimation();
     }
 
     #endregion
 
     #region Metods
-    public void GetDamage(int Damage)
+    public override void GetDamage(int Damage)
     {
         _health -= Damage;
-
-        SetRandomColor();
-        StartAnimation();
-
-        onDamage?.Invoke();
-
-        if(_health <= 0) 
+        if (_health <= 0)
             Die();
     }
 
-    private void Die()
+    private protected override void Die()
     {
-        onDie?.Invoke(this);
+        Wallet.Instance.PutMoney(_killPrize);
         Destroy(gameObject);
     }
 
     private Color RandomizeColor()
     {
-       Color color = new Color(Random.Range(0.2f, 1f), Random.Range(0.2f, 1f), Random.Range(0.2f, 1f));
+        Color color = new Color(Random.Range(0.2f, 1f), Random.Range(0.2f, 1f), Random.Range(0.2f, 1f));
         return color;
     }
 
