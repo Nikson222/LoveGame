@@ -50,8 +50,7 @@ MonoBehaviour:
   _killPrize: 1
   _animator: {fileID: 3840190294572909517}
   _scaleAnimation: {fileID: 7400000, guid: 95a7cbfa7513fcf498eada451f8d4238, type: 2}
-  _xOffset: -0.156
-  _yOffset: 0
+  _parametrName: IsHit
 --- !u!95 &3840190294572909517
 Animator:
   serializedVersion: 3

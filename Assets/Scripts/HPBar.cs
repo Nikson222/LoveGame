@@ -5,43 +5,23 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    [SerializeField] EnemySpawner _enemySpawner;
-
     [SerializeField] Image _fillBar;
+
     private float _startHealth;
 
     private void Start()
     {
-        _enemySpawner.OnSpawn += SubscribeMethodToEnemy;
-
-        foreach (var enemy in _enemySpawner.EnemiesList)
-        {
-            enemy.OnDamage += UpdateBarFilling;
-            _startHealth += enemy.Health;
-        }
-
-        UpdateBarFilling();
+        BaseEnemy.OnDamage += UpdateBarFilling;
+        EnemySpawner.OnSpawn += GetStartedHealth;
     }
 
-    private void SubscribeMethodToEnemy()
+    private void GetStartedHealth(BaseEnemy enemy)
     {
-        if(_enemySpawner.EnemiesList.Count > 0)
-            _enemySpawner.EnemiesList[_enemySpawner.EnemiesList.Count-1].OnDamage += UpdateBarFilling;
+        _startHealth = enemy.Health;
     }
 
-    private void UpdateBarFilling()
+    private void UpdateBarFilling(float Health)
     {
-        float summuryHealthPoints = 0;
-        if (_enemySpawner.EnemiesList.Count > 1)
-        {
-            foreach (var enemy in _enemySpawner.EnemiesList)
-            {
-                summuryHealthPoints += enemy.Health;
-            }
-        }
-        else if(_enemySpawner.EnemiesList.Count < 1 && _enemySpawner.EnemiesList.Count > 0)
-            summuryHealthPoints += _enemySpawner.EnemiesList[0].Health;
-
-        _fillBar.fillAmount = (summuryHealthPoints / _startHealth);
+        _fillBar.fillAmount = (Health / _startHealth);
     }
 }

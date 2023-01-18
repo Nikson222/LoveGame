@@ -1,37 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseEnemy : MonoBehaviour
 {
     [SerializeField] private protected float _health;
-    [SerializeField] private protected int _killPrize;
 
-    public delegate void DamageNotify();
-    public event DamageNotify OnDamage;
-
-    public delegate void DieNotify();
-    public event DieNotify OnDie;
+    public static Action<float> OnDamage;
+    public static Action OnDie;
 
     public float Health { get => _health; }
 
-    public void Init(float health, int killPrize)
+
+    private void OnMouseDown()
     {
-        _health = health;
-        _killPrize = killPrize;
+        GetDamage(DamageDealer.Damage);
     }
 
-    private protected virtual void GetDamage(int Damage)
+    public void Init(float health)
+    {
+        _health = health;
+    }
+
+    protected virtual void GetDamage(int Damage)
     {
         _health -= Damage;
 
-        OnDamage?.Invoke();
+        OnDamage?.Invoke(Health);
 
         if (_health <= 0)
            Die();
     }
 
-    private protected virtual void Die()
+    protected virtual void Die()
     {
         OnDie?.Invoke();
 

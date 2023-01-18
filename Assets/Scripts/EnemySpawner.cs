@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +10,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _currentLevel;
     [SerializeField] private float _respawnColldown = 1f;
 
-    //[SerializeField] private HPBarManager _HPBarManager;
+    //In the future to spawn many enemies
+    //private List<BaseEnemy> _enemiesList = new List<BaseEnemy>();
+    //public List<BaseEnemy> EnemiesList { get => _enemiesList; private set => _enemiesList = value; }
 
-    private List<BaseEnemy> _enemiesList = new List<BaseEnemy>();
-    public List<BaseEnemy> EnemiesList { get => _enemiesList; private set => _enemiesList = value; }
-
-    public delegate void SpawnNotify();
-    public event SpawnNotify OnSpawn;
+    public static Action<BaseEnemy> OnSpawn;
 
     private void Start()
     {
-        CleanLevel();
+        BaseEnemy.OnDie += Spawn;
         Spawn();
     }
 
@@ -28,27 +27,18 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnCoroutine());
     }
 
-    private void CleanLevel()
-    {
-        foreach (var enemy in _enemiesList)
-        {
-            Destroy(enemy.gameObject);
-        }
-    }
-
     IEnumerator SpawnCoroutine()
     {
         yield return new WaitForSeconds(_respawnColldown);
 
-        var spawnedEnemyObject = Instantiate(_levelConfigs[_currentLevel].Hearthes[Random.Range(0, _levelConfigs[_currentLevel].Hearthes.Count-1)], transform.position, Quaternion.identity);
+        var enemyIndex = UnityEngine.Random.Range(0, _levelConfigs[_currentLevel].Hearthes.Count - 1);
+        var spawnedEnemyObject = Instantiate(_levelConfigs[_currentLevel].Hearthes[enemyIndex], _levelConfigs[_currentLevel].Hearthes[enemyIndex].transform.position, Quaternion.identity);
+
         spawnedEnemyObject.transform.SetParent(transform, true);
 
         BaseEnemy spawnedEnemy = spawnedEnemyObject.GetComponent<BaseEnemy>();
+        spawnedEnemy.Init(_levelConfigs[_currentLevel].HealthOfEnemy);
 
-        OnSpawn?.Invoke();
-
-        spawnedEnemy.OnDie += Spawn;
-
-        //_HPBarManager?.SpawnBarForEnemy(spawnedEnemyObject);
+        OnSpawn?.Invoke(spawnedEnemy);
     }
 }

@@ -15,5 +15,5 @@ MonoBehaviour:
   _enemies:
   - {fileID: 3840190294572909555, guid: 98f4ba923afeafe4d84c79680fe7754e, type: 3}
   _level: 0
-  _healthOfEnemy: 10
+  _healthOfEnemy: 100
   _prizeForDestroy: 1
