@@ -37,18 +37,6 @@ public class BigHearth : BaseEnemy
     #endregion
 
     #region Metods
-    public override void GetDamage(int Damage)
-    {
-        _health -= Damage;
-        if (_health <= 0)
-            Die();
-    }
-
-    private protected override void Die()
-    {
-        Wallet.Instance.PutMoney(_killPrize);
-        Destroy(gameObject);
-    }
 
     private Color RandomizeColor()
     {

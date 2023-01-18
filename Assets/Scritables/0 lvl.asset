@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7007528ad89aa4a46a4d089364d8a601, type: 3}
   m_Name: 0 lvl
   m_EditorClassIdentifier: 
-  _level: 0
-  _hearthes:
+  _enemies:
   - {fileID: 3840190294572909555, guid: 98f4ba923afeafe4d84c79680fe7754e, type: 3}
-  _prizeForDestroy: 10
+  _level: 0
+  _healthOfEnemy: 10
+  _prizeForDestroy: 1

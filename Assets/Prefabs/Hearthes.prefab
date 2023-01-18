@@ -45,4 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelConfigs:
   - {fileID: 11400000, guid: 06335331a59762847a274cbd43325fa3, type: 2}
-  _startLevel: 0
+  _currentLevel: 0
+  _respawnColldown: 0.5
+  _HPBarManager: {fileID: 0}

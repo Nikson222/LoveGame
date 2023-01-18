@@ -8,22 +8,33 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private protected int _killPrize;
 
     public delegate void DamageNotify();
-    public event DamageNotify onDamage;
-    public delegate void DieNotify(BigHearth hearth);
-    public event DieNotify onDie;
+    public event DamageNotify OnDamage;
+
+    public delegate void DieNotify();
+    public event DieNotify OnDie;
+
     public float Health { get => _health; }
 
-    public virtual void GetDamage(int Damage)
+    public void Init(float health, int killPrize)
+    {
+        _health = health;
+        _killPrize = killPrize;
+    }
+
+    private protected virtual void GetDamage(int Damage)
     {
         _health -= Damage;
-        onDamage?.Invoke();
+
+        OnDamage?.Invoke();
+
         if (_health <= 0)
            Die();
     }
 
     private protected virtual void Die()
     {
-        Wallet.Instance.PutMoney(_killPrize);
+        OnDie?.Invoke();
+
         Destroy(gameObject);
     }
 }

@@ -1,35 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    private Image _filledImage;
-    [SerializeField] private HearthSpawner _hearthesSpawner;
-    private BigHearth _currentHearth;
-    private float _HealthCount;
+    [SerializeField] EnemySpawner _enemySpawner;
+
+    [SerializeField] Image _fillBar;
+    private float _startHealth;
 
     private void Start()
     {
-        _filledImage = GetComponent<Image>();
-        _hearthesSpawner.OnSpawn += GetNewHearth;
+        _enemySpawner.OnSpawn += SubscribeMethodToEnemy;
+
+        foreach (var enemy in _enemySpawner.EnemiesList)
+        {
+            enemy.OnDamage += UpdateBarFilling;
+            _startHealth += enemy.Health;
+        }
+
+        UpdateBarFilling();
     }
 
-    public void GetNewHearth()
+    private void SubscribeMethodToEnemy()
     {
-        if (_hearthesSpawner)
-        {
-            _filledImage.fillAmount = 1;
-            _currentHearth = _hearthesSpawner.HearthesList[_hearthesSpawner.HearthesList.Count - 1];
-            _HealthCount = _currentHearth.Health;
-            _currentHearth.onDamage += SetFilled;
-        }
+        if(_enemySpawner.EnemiesList.Count > 0)
+            _enemySpawner.EnemiesList[_enemySpawner.EnemiesList.Count-1].OnDamage += UpdateBarFilling;
     }
-    public void SetFilled()
+
+    private void UpdateBarFilling()
     {
-        
-        _filledImage.fillAmount = (_currentHearth.Health / _HealthCount);
+        float summuryHealthPoints = 0;
+        if (_enemySpawner.EnemiesList.Count > 1)
+        {
+            foreach (var enemy in _enemySpawner.EnemiesList)
+            {
+                summuryHealthPoints += enemy.Health;
+            }
+        }
+        else if(_enemySpawner.EnemiesList.Count < 1 && _enemySpawner.EnemiesList.Count > 0)
+            summuryHealthPoints += _enemySpawner.EnemiesList[0].Health;
+
+        _fillBar.fillAmount = (summuryHealthPoints / _startHealth);
     }
 }
