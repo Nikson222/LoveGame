@@ -12,6 +12,7 @@ public class HPBar : MonoBehaviour
     private void Start()
     {
         BaseEnemy.OnDamage += UpdateBarFilling;
+        BaseEnemy.OnInit += UpdateBarFilling;
         EnemySpawner.OnSpawn += GetStartedHealth;
     }
 

@@ -7,21 +7,27 @@ using UnityEngine.Events;
 public class BaseEnemy : MonoBehaviour
 {
     [SerializeField] private protected float _health;
+    [SerializeField] private protected int _killPrize;
 
     public static Action<float> OnDamage;
     public static Action OnDie;
+    public static Action<float> OnInit;
+    public static Action<int> OnGivePrize;
 
     public float Health { get => _health; }
+    public int KillPrize { get => _killPrize; }
 
 
     private void OnMouseDown()
     {
-        GetDamage(DamageDealer.Damage);
+        GetDamage(PlayerProperty.Damage);
     }
 
-    public void Init(float health)
+    public void Init(float health, int killPrize = 0)
     {
+        _killPrize = killPrize;
         _health = health;
+        OnInit?.Invoke(_health);
     }
 
     protected virtual void GetDamage(int Damage)
@@ -37,6 +43,7 @@ public class BaseEnemy : MonoBehaviour
     protected virtual void Die()
     {
         OnDie?.Invoke();
+        OnGivePrize?.Invoke(KillPrize);
 
         Destroy(gameObject);
     }

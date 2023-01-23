@@ -37,7 +37,7 @@ public class EnemySpawner : MonoBehaviour
         spawnedEnemyObject.transform.SetParent(transform, true);
 
         BaseEnemy spawnedEnemy = spawnedEnemyObject.GetComponent<BaseEnemy>();
-        spawnedEnemy.Init(_levelConfigs[_currentLevel].HealthOfEnemy);
+        spawnedEnemy.Init(_levelConfigs[_currentLevel].HealthOfEnemy, _levelConfigs[_currentLevel].PrizeForDestroy);
 
         OnSpawn?.Invoke(spawnedEnemy);
     }
