@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BaseEnemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private protected float _health;
     [SerializeField] private protected int _killPrize;

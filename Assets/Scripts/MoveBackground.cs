@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(RawImage))]
 public class MoveBackground : MonoBehaviour
 {
-    [SerializeField] private float _speed = 10f;
-    private Renderer _renderer;
+    private RawImage rawImage;
+    [SerializeField] private float _xSpeed, _ySpeed;
 
     private void Start()
     {
-        _renderer = GetComponent<MeshRenderer>();
+        rawImage = GetComponent<RawImage>();
     }
     private void Update()
     {
-        _renderer.material.mainTextureOffset -= new Vector2(_speed * Time.deltaTime, 0f);
+        rawImage.uvRect = new Rect(rawImage.uvRect.position + new Vector2(_xSpeed, _ySpeed) * Time.deltaTime, rawImage.uvRect.size);
     }
 }

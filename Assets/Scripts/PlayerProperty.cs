@@ -15,17 +15,17 @@ public class PlayerProperty : MonoBehaviour
 
     private void Start()
     {
-        BaseEnemy.OnGivePrize += CashReceipt;
+        Enemy.OnGivePrize += CashReceipt;
     }
 
-    private void CashReceipt(int amount)
+    public void CashReceipt(int amount)
     {
         _money += amount;
 
         OnMoneyChanged?.Invoke(Money);
     }
 
-    private void CashWithdrawal(int amount)
+    public void CashWithdrawal(int amount)
     {
         if (_money >= amount)
             _money -= amount;

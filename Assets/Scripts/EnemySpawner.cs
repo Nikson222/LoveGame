@@ -6,19 +6,26 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Level settings")]
+    private int _currentLevel;
+    
     [SerializeField] private List<LevelConfig> _levelConfigs = new List<LevelConfig>();
-    [SerializeField] private int _currentLevel;
+
     [SerializeField] private float _respawnColldown = 1f;
 
-    //In the future to spawn many enemies
-    //private List<BaseEnemy> _enemiesList = new List<BaseEnemy>();
-    //public List<BaseEnemy> EnemiesList { get => _enemiesList; private set => _enemiesList = value; }
+    public List<LevelConfig> LevelConfigs => _levelConfigs;
 
-    public static Action<BaseEnemy> OnSpawn;
+    public static Action<Enemy> OnSpawn;
+
+    public int CurrentLevel => _currentLevel;
+
+    private void Awake()
+    {
+        _currentLevel = GameManager.CurrentLevel;
+    }
 
     private void Start()
     {
-        BaseEnemy.OnDie += Spawn;
+        Enemy.OnDie += Spawn;
         Spawn();
     }
 
@@ -36,9 +43,27 @@ public class EnemySpawner : MonoBehaviour
 
         spawnedEnemyObject.transform.SetParent(transform, true);
 
-        BaseEnemy spawnedEnemy = spawnedEnemyObject.GetComponent<BaseEnemy>();
+        Enemy spawnedEnemy = spawnedEnemyObject.GetComponent<Enemy>();
         spawnedEnemy.Init(_levelConfigs[_currentLevel].HealthOfEnemy, _levelConfigs[_currentLevel].PrizeForDestroy);
 
         OnSpawn?.Invoke(spawnedEnemy);
+    }
+
+    private void ClearLastLevelEnemies()
+    {
+        foreach (var enemy in transform.GetComponentsInChildren<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+    }
+
+    public void ChangeLevel(int levelNum)
+    {
+        if (levelNum < _levelConfigs.Count)
+        {
+            _currentLevel = levelNum;
+            ClearLastLevelEnemies();
+            StartCoroutine(SpawnCoroutine());
+        }
     }
 }

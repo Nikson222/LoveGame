@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3840190294572909554}
   - component: {fileID: 3840190294572909518}
   m_Layer: 0
-  m_Name: BigHearth
+  m_Name: BigBaloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86b08b60db4661e438526c1c900d5212, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b3a8259504d0a24694d5ffcef66d865, type: 3}
   m_Color: {r: 1, g: 0.043137256, b: 0.91764706, a: 1}
   m_FlipX: 0
   m_FlipY: 0

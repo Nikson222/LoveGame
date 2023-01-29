@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AnimatedEnemy : BaseEnemy
+public abstract class AnimatedEnemy : Enemy
 {
     [Header("Animation setting")]
     [SerializeField] private Animator _animator;

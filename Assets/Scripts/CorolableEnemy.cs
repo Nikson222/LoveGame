@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CorolableEnemy : AnimatedEnemy
 {   
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private ParticleSystem _particleSystem;
 
+    private SpriteRenderer _spriteRenderer;
+    
     #region UnityMetods
 
     private void Start()
@@ -24,6 +26,14 @@ public class CorolableEnemy : AnimatedEnemy
 
     #region Metods
 
+    protected override void Die()
+    {
+        _particleSystem = Instantiate(_particleSystem);
+        _particleSystem.transform.position = transform.position;
+        _particleSystem.maxParticles = _killPrize;
+        _particleSystem.Play();
+        base.Die();
+    }
     private Color RandomizeColor()
     {
         Color color = new Color(Random.Range(0.2f, 1f), Random.Range(0.2f, 1f), Random.Range(0.2f, 1f));
