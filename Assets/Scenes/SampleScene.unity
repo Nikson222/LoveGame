@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e05dfbf562822f4f936c8e68873d3ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemySpawner: {fileID: 0}
 --- !u!114 &192311158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,6 +720,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}
       propertyPath: _levelConfigs.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 74e2a84d57ec6f14c99e0692b1dfbbf8, type: 2}
+    - target: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}
+      propertyPath: _levelConfigs.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 74e2a84d57ec6f14c99e0692b1dfbbf8, type: 2}
     - target: {fileID: 698872358527684347, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}

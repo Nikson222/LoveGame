@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-   // public static GameManager instance;
-
     [SerializeField] RawImage rawImage;
 
     private static EnemySpawner _spawner;
@@ -18,8 +16,9 @@ public class GameManager : MonoBehaviour
 
     public static int CurrentLevel { get { return _currentLevel; } }
     public static int MaxAllowedLevel { get { return _maxAllowedLevel; } }
+    public static int MaximumExistingLevel { get { return _spawner.LevelConfigs.Count; } }
 
-    public static bool IsLastLevel = CurrentLevel == MaxAllowedLevel;
+    public static bool IsLastLevel;
 
     public static Action OnLevelChanged;
     public static Action OnUnlockLevel;
@@ -27,12 +26,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         KillCounter.OnTaskComleted += UnlockLevel;
+        IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
     }
 
     private void Start()
     {
-        //instance = this;
-
         _spawner = FindObjectOfType<EnemySpawner>();
         if (_spawner == null)
             Debug.Log("Spawner null refference int Gamemanager script!");
@@ -40,14 +38,8 @@ public class GameManager : MonoBehaviour
         _levelSwitch = FindObjectOfType<LevelSwitch>();
         if (_levelSwitch == null)
             Debug.Log("_levelSwitch null refference int Gamemanager script!");
-
     }
 
-    private void Update()
-    {
-        print(MaxAllowedLevel);
-
-    }
     public void ChangeLevel(int levelValue)
     {
         if (_currentLevel + levelValue <= _maxAllowedLevel && _currentLevel + levelValue >= 0)
@@ -55,23 +47,21 @@ public class GameManager : MonoBehaviour
             _currentLevel += levelValue;
             _spawner.ChangeLevel(CurrentLevel);
 
-
             if (rawImage != null)
                 rawImage.texture = _spawner.LevelConfigs[CurrentLevel].BackgroundTexture;
 
+            IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
             OnLevelChanged();
         }
     }
 
-    public void UnlockLevel()
+    private void UnlockLevel()
     {
-        if (_spawner.LevelConfigs.Count > MaxAllowedLevel)
+        if (MaximumExistingLevel > MaxAllowedLevel+1)
         {
             _maxAllowedLevel += 1;
-            //print(CurrentLevel);
-            //print(_maxAllowedLevel);
-            //print(IsLastLevel);
 
+            IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
 
             OnUnlockLevel();
         }

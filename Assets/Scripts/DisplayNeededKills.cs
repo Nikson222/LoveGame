@@ -7,10 +7,15 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class DisplayNeededKills : MonoBehaviour
 {
+    [SerializeField] EnemySpawner _enemySpawner;
     private static Text _killsText;
     void Start()
     {
-        GameManager.OnUnlockLevel += UpdateVisibleText;
+        _enemySpawner = FindObjectOfType<EnemySpawner>();
+        if (_enemySpawner == null)
+            Debug.Log("Spawner null refference int DisplayNeededKills script!");
+
+        GameManager.OnUnlockLevel += DisplayUpdate;
         GameManager.OnUnlockLevel += UpdateVisibleText;
 
         GameManager.OnLevelChanged += DisplayUpdate;
@@ -27,6 +32,6 @@ public class DisplayNeededKills : MonoBehaviour
 
     public void UpdateVisibleText()
     {
-        _killsText.gameObject.SetActive(GameManager.MaxAllowedLevel.Equals(GameManager.CurrentLevel));
+        _killsText.gameObject.SetActive(GameManager.MaxAllowedLevel.Equals(GameManager.CurrentLevel) && GameManager.CurrentLevel < GameManager.MaximumExistingLevel-1);
     }
 }

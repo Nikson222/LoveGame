@@ -30,9 +30,9 @@ public class KillCounter : MonoBehaviour
 
     public void AddKillCount()
     {
-        if (GameManager.IsLastLevel)
+        if (GameManager.IsLastLevel && GameManager.CurrentLevel < GameManager.MaximumExistingLevel-1)
         {
-            ++KillCount;
+            KillCount += 1;
             DisplayNeededKills.DisplayUpdate();
 
             if (KillCount == NeededKillsOnLastLevel)
