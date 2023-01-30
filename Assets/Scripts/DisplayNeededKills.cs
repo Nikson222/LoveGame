@@ -10,6 +10,12 @@ public class DisplayNeededKills : MonoBehaviour
     private static Text _killsText;
     void Start()
     {
+        GameManager.OnUnlockLevel += UpdateVisibleText;
+        GameManager.OnUnlockLevel += UpdateVisibleText;
+
+        GameManager.OnLevelChanged += DisplayUpdate;
+        GameManager.OnLevelChanged += UpdateVisibleText;
+
         _killsText = GetComponent<Text>();
         _killsText.text = $"{KillCounter.NeededKillsOnLastLevel - KillCounter.KillCount} need to next level";
     }
@@ -19,8 +25,8 @@ public class DisplayNeededKills : MonoBehaviour
         _killsText.text = $"{KillCounter.NeededKillsOnLastLevel - KillCounter.KillCount} need to next level";
     }
 
-    public static void UpdateVisibleText()
+    public void UpdateVisibleText()
     {
-        _killsText.gameObject.SetActive(GameManager.CurrentLevel.Equals(GameManager.MaxAllowedLevel));
+        _killsText.gameObject.SetActive(GameManager.MaxAllowedLevel.Equals(GameManager.CurrentLevel));
     }
 }

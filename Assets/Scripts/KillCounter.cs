@@ -11,9 +11,8 @@ public class KillCounter : MonoBehaviour
 
     public static int KillCount = 0;
 
-    public static bool _isLastLevel = GameManager.CurrentLevel.Equals(GameManager.MaxAllowedLevel); 
-
     public static Action OnTaskComleted;
+    
 
     private void Start()
     {
@@ -21,26 +20,30 @@ public class KillCounter : MonoBehaviour
         if (_spawner == null)
             Debug.Log("Spawner null refference in KillCounter script!");
 
+
         Enemy.OnDie += AddKillCount;
         NewTaskForCounter(_spawner.LevelConfigs[GameManager.MaxAllowedLevel].NeedKillsToNextLevel);
+
+        DisplayNeededKills.DisplayUpdate();
     }
+
 
     public void AddKillCount()
     {
-        if (_isLastLevel)
+        if (GameManager.IsLastLevel)
         {
             ++KillCount;
             DisplayNeededKills.DisplayUpdate();
 
             if (KillCount == NeededKillsOnLastLevel)
             {
-                OnTaskComleted();
-                print(GameManager.CurrentLevel.Equals(GameManager.MaxAllowedLevel));
-
                 NewTaskForCounter(_spawner.LevelConfigs[GameManager.MaxAllowedLevel].NeedKillsToNextLevel);
+
+                OnTaskComleted();
             }
         }
     }
+
 
     public void NewTaskForCounter(int needKills)
     {

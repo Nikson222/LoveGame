@@ -258,6 +258,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &379110382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1445329824, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
+  m_PrefabInstance: {fileID: 4781906362378985885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1411742415064287315, guid: f01ed304d0cba9b4091acfca7588ef6a, type: 3}
@@ -407,6 +418,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &579155301 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2142133209, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
+  m_PrefabInstance: {fileID: 4781906362378985885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &579155303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579155301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfdfbf2d58ec26141b06d8160c6075ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangeLevelDown: {fileID: 379110382}
+  ChangeLevelUp: {fileID: 1907004680}
 --- !u!224 &904030621 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8533093935618158637, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
@@ -665,6 +695,17 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1907004680 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2016670632, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
+  m_PrefabInstance: {fileID: 4781906362378985885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &698872358784905573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -962,5 +1003,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1445329827, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
+    - {fileID: 2016670635, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e8e9362cd1a406545bb6ab805d24d829, type: 3}
