@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7007528ad89aa4a46a4d089364d8a601, type: 3}
-  m_Name: 1 lvl
+  m_Name: 2 lvl
   m_EditorClassIdentifier: 
   _enemies:
-  - {fileID: 3840190294572909555, guid: 00f8589db8af5e544a53928648153c6e, type: 3}
-  _levelIndex: 1
-  _healthOfEnemy: 10
-  _prizeForDestroy: 2
-  _needKillsToNextLevel: 5
-  _backgroundTexture: {fileID: 2800000, guid: 665457a3fa936a94a96f15c6bdef707c, type: 3}
+  - {fileID: 3840190294572909555, guid: 20eaea9b7ed0fdb4389a3400252661f9, type: 3}
+  _levelIndex: 2
+  _healthOfEnemy: 20
+  _prizeForDestroy: 50
+  _needKillsToNextLevel: 0
+  _backgroundTexture: {fileID: 2800000, guid: 376d669c2bf5f144da85151ccb9146fd, type: 3}

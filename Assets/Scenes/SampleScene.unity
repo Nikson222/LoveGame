@@ -716,12 +716,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}
       propertyPath: _levelConfigs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}
       propertyPath: _levelConfigs.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 74e2a84d57ec6f14c99e0692b1dfbbf8, type: 2}
+      objectReference: {fileID: 11400000, guid: a40cb411b6e47ed428895e3dd555048d, type: 2}
     - target: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}
       propertyPath: _levelConfigs.Array.data[2]
       value: 

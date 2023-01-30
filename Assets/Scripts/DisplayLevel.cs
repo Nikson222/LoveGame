@@ -11,6 +11,7 @@ public class DisplayLevel : MonoBehaviour
     void Start()
     {
         GameManager.OnLevelChanged += DisplayUpdate;
+
         _levelText = GetComponent<Text>();
         _levelText.text = $"{GameManager.CurrentLevel+1}";
     }
