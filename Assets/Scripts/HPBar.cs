@@ -10,17 +10,17 @@ public class HPBar : MonoBehaviour
 
     private float _startHealth;
 
-    public Canvas _canvas;
-    public Enemy _enemyIDisplay;
+    public Canvas Canvas;
+    public Enemy EnemyIDisplay;
 
     private void Start()
     {
-        _enemyIDisplay.OnDamage += UpdateBarFilling;
-        _enemyIDisplay.OnDamage += UpdateBarText;
-        _enemyIDisplay.OnInit += UpdateBarFilling;
-        _enemyIDisplay.OnInit += UpdateBarText;
+        EnemyIDisplay.OnDamage += UpdateBarFilling;
+        EnemyIDisplay.OnDamage += UpdateBarText;
+        EnemyIDisplay.OnInit += UpdateBarFilling;
+        EnemyIDisplay.OnInit += UpdateBarText;
 
-        _enemyIDisplay.OnDestroying += SelfDestroy;
+        EnemyIDisplay.OnDestroying += SelfDestroy;
     }
 
     public void GetStartedHealth(Enemy enemy)

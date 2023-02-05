@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    public static GameManager InstanceGamemanager;
+    public static LevelManager InstanceLevelManager;
     
-    [SerializeField] private RawImage backgroundImage;
+    [SerializeField] private RawImage _backgroundImage;
 
     [SerializeField] public EnemySpawner _enemySpawner;
 
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        InstanceGamemanager = this;
+        InstanceLevelManager = this;
         IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
     }
 
@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour
             _currentLevel += levelValue;
             _enemySpawner.ChangeLevel(CurrentLevel);
 
-            if (backgroundImage != null)
-                backgroundImage.texture = _enemySpawner.LevelConfigs[CurrentLevel].BackgroundTexture;
+            if (_backgroundImage != null)
+                _backgroundImage.texture = _enemySpawner.LevelConfigs[CurrentLevel].BackgroundTexture;
 
             IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
             OnLevelChanged();

@@ -271,8 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdfbf2d58ec26141b06d8160c6075ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeLevelDown: {fileID: 379110382}
-  ChangeLevelUp: {fileID: 1907004680}
+  _levelDownButton: {fileID: 379110382}
+  _levelUpButton: {fileID: 1907004680}
 --- !u!114 &884971413 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 698872358527684346, guid: 886b092f5a62e9c4e872cd040bc5865d, type: 3}

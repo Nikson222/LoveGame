@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 [RequireComponent(typeof(Text))]
 public class DisplayNeededKills : MonoBehaviour
 {
@@ -11,13 +10,13 @@ public class DisplayNeededKills : MonoBehaviour
 
     private Text _killsText;
 
-    void Start()
+    private void Start()
     {
-        GameManager.InstanceGamemanager.OnUnlockLevel += DisplayUpdate;
-        GameManager.InstanceGamemanager.OnUnlockLevel += UpdateVisibleText;
+        LevelManager.InstanceLevelManager.OnUnlockLevel += DisplayUpdate;
+        LevelManager.InstanceLevelManager.OnUnlockLevel += UpdateVisibleText;
 
-        GameManager.InstanceGamemanager.OnLevelChanged += DisplayUpdate;
-        GameManager.InstanceGamemanager.OnLevelChanged += UpdateVisibleText;
+        LevelManager.InstanceLevelManager.OnLevelChanged += DisplayUpdate;
+        LevelManager.InstanceLevelManager.OnLevelChanged += UpdateVisibleText;
 
         _killCounter.OnCounterChanged += DisplayUpdate;
 
@@ -25,14 +24,14 @@ public class DisplayNeededKills : MonoBehaviour
         _killsText.text = $"{_killCounter.NeededKillsOnLastLevel - _killCounter.KillCount} need to next level";
     }
 
-    public void DisplayUpdate()
+    private void DisplayUpdate()
     {
         _killsText.text = $"{_killCounter.NeededKillsOnLastLevel - _killCounter.KillCount} need to next level";
     }
 
-    public void UpdateVisibleText()
+    private void UpdateVisibleText()
     {
-        _killsText.gameObject.SetActive(GameManager.InstanceGamemanager.MaxAllowedLevel.Equals(GameManager.InstanceGamemanager.CurrentLevel) && 
-            GameManager.InstanceGamemanager.CurrentLevel < GameManager.InstanceGamemanager.MaximumExistingLevel-1);
+        _killsText.gameObject.SetActive(LevelManager.InstanceLevelManager.MaxAllowedLevel.Equals(LevelManager.InstanceLevelManager.CurrentLevel) && 
+            LevelManager.InstanceLevelManager.CurrentLevel < LevelManager.InstanceLevelManager.MaximumExistingLevel-1);
     }
 }

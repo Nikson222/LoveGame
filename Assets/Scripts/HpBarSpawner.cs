@@ -16,7 +16,7 @@ public class HpBarSpawner : MonoBehaviour
     public void CreateHPBarForEnemy(Enemy enemy)
     {
         HPBar hpBar = Instantiate(_hpBarPrefab, transform).GetComponent<HPBar>();
-        hpBar._enemyIDisplay = enemy;
+        hpBar.EnemyIDisplay = enemy;
 
         hpBar.GetStartedHealth(enemy);  
     }

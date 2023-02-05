@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class KillCounter : MonoBehaviour
 {
-    public int NeededKillsOnLastLevel;
-
-    public int KillCount = 0;
-
     private EnemySpawner _enemySpawner;
+
+    public int NeededKillsOnLastLevel;
+    public int KillCount = 0;
 
     public Action OnCounterChanged;
 
     private void Start()
     {
-        _enemySpawner = GameManager.InstanceGamemanager._enemySpawner;
+        _enemySpawner = LevelManager.InstanceLevelManager._enemySpawner;
         _enemySpawner.OnSpawn += SubscribeOnEnemy;
         NewTaskForCounter();
     }
@@ -27,13 +26,13 @@ public class KillCounter : MonoBehaviour
 
     public void AddKillCount()
     {
-        if (GameManager.InstanceGamemanager.IsLastLevel && GameManager.InstanceGamemanager.CurrentLevel < GameManager.InstanceGamemanager.MaximumExistingLevel - 1)
+        if (LevelManager.InstanceLevelManager.IsLastLevel && LevelManager.InstanceLevelManager.CurrentLevel < LevelManager.InstanceLevelManager.MaximumExistingLevel - 1)
         {
             KillCount += 1;
 
             if (KillCount == NeededKillsOnLastLevel)
             {
-                GameManager.InstanceGamemanager.UnlockLevel();
+                LevelManager.InstanceLevelManager.UnlockLevel();
                 NewTaskForCounter();
             }
 
@@ -43,7 +42,7 @@ public class KillCounter : MonoBehaviour
 
     public void NewTaskForCounter()
     {
-        NeededKillsOnLastLevel = _enemySpawner.LevelConfigs[GameManager.InstanceGamemanager.MaxAllowedLevel].NeedKillsToNextLevel;
+        NeededKillsOnLastLevel = _enemySpawner.LevelConfigs[LevelManager.InstanceLevelManager.MaxAllowedLevel].NeedKillsToNextLevel;
         KillCount = 0;
         OnCounterChanged?.Invoke();
     }

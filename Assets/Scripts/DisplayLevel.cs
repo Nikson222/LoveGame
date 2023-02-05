@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Text))]
-
 public class DisplayLevel : MonoBehaviour
 {
-    private static Text _levelText;
+    private Text _levelText;
+
     void Start()
     {
-        GameManager.InstanceGamemanager.OnLevelChanged += DisplayUpdate;
+        LevelManager.InstanceLevelManager.OnLevelChanged += DisplayUpdate;
 
         _levelText = GetComponent<Text>();
-        _levelText.text = $"{GameManager.InstanceGamemanager.CurrentLevel+1}";
+        _levelText.text = $"{LevelManager.InstanceLevelManager.CurrentLevel+1}";
     }
     
-    static public void DisplayUpdate()
+    private void DisplayUpdate()
     {
-        _levelText.text = $"{GameManager.InstanceGamemanager.CurrentLevel + 1}";
+        _levelText.text = $"{LevelManager.InstanceLevelManager.CurrentLevel + 1}";
     }
 }

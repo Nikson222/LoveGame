@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class LevelSwitch : MonoBehaviour
 {
-    [SerializeField] private Button ChangeLevelDown;
-    [SerializeField] private Button ChangeLevelUp;
+    [SerializeField] private Button _levelDownButton;
+    [SerializeField] private Button _levelUpButton;
 
     private void Start()
     {
         SetInteractable();
-        GameManager.InstanceGamemanager.OnLevelChanged += SetInteractable;
-        GameManager.InstanceGamemanager.OnUnlockLevel += SetInteractable;
+        LevelManager.InstanceLevelManager.OnLevelChanged += SetInteractable;
+        LevelManager.InstanceLevelManager.OnUnlockLevel += SetInteractable;
     }
 
     void SetInteractable()
     {
-        ChangeLevelDown.interactable = GameManager.InstanceGamemanager.CurrentLevel > 0;
-        ChangeLevelUp.interactable = !GameManager.InstanceGamemanager.IsLastLevel;
+        _levelDownButton.interactable = LevelManager.InstanceLevelManager.CurrentLevel > 0;
+        _levelUpButton.interactable = !LevelManager.InstanceLevelManager.IsLastLevel;
     }
 }

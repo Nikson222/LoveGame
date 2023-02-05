@@ -5,22 +5,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Level settings")]
-    private int _currentLevel;
-    
     [SerializeField] private List<LevelConfig> _levelConfigs = new List<LevelConfig>();
 
     [SerializeField] private float _respawnColldown = 1f;
 
-    public List<LevelConfig> LevelConfigs => _levelConfigs;
+    private int _currentLevel;
 
+    public List<LevelConfig> LevelConfigs => _levelConfigs;
     public Action<Enemy> OnSpawn;
 
     public int CurrentLevel => _currentLevel;
 
     private void Awake()
     {
-        _currentLevel = GameManager.InstanceGamemanager.CurrentLevel;
+        _currentLevel = LevelManager.InstanceLevelManager.CurrentLevel;
     }
 
     private void Start()

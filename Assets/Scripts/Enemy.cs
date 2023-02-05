@@ -9,9 +9,9 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private protected float _health;
     [SerializeField] private protected int _killPrize;
 
-    public Action<float> OnDamage;
     public Action OnDie;
     public Action OnDestroying;
+    public Action<float> OnDamage;
     public Action<float> OnInit;
     public Action<int> OnGivePrize;
 
