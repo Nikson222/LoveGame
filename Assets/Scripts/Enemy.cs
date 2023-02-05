@@ -9,10 +9,11 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private protected float _health;
     [SerializeField] private protected int _killPrize;
 
-    public static Action<float> OnDamage;
-    public static Action OnDie;
-    public static Action<float> OnInit;
-    public static Action<int> OnGivePrize;
+    public Action<float> OnDamage;
+    public Action OnDie;
+    public Action OnDestroying;
+    public Action<float> OnInit;
+    public Action<int> OnGivePrize;
 
     public float Health { get => _health; }
     public int KillPrize { get => _killPrize; }
@@ -20,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GetDamage(PlayerProperty.Damage);
+        GetDamage(PlayerData.Damage);
     }
 
     public void Init(float health, int killPrize = 0)
@@ -45,6 +46,13 @@ public abstract class Enemy : MonoBehaviour
         OnDie?.Invoke();
         OnGivePrize?.Invoke(KillPrize);
 
+        PlayerData.CashReceipt(KillPrize);
+
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        OnDestroying?.Invoke();
     }
 }

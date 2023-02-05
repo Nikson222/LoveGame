@@ -10,29 +10,38 @@ public class HPBar : MonoBehaviour
 
     private float _startHealth;
 
+    public Canvas _canvas;
+    public Enemy _enemyIDisplay;
+
     private void Start()
     {
-        EnemySpawner.OnSpawn += GetStartedHealth;
-        Enemy.OnDamage += UpdateBarFilling;
-        Enemy.OnDamage += UpdateBarText;
-        Enemy.OnInit += UpdateBarFilling;
-        Enemy.OnInit += UpdateBarText;
+        _enemyIDisplay.OnDamage += UpdateBarFilling;
+        _enemyIDisplay.OnDamage += UpdateBarText;
+        _enemyIDisplay.OnInit += UpdateBarFilling;
+        _enemyIDisplay.OnInit += UpdateBarText;
+
+        _enemyIDisplay.OnDestroying += SelfDestroy;
     }
 
-    private void GetStartedHealth(Enemy enemy)
+    public void GetStartedHealth(Enemy enemy)
     {
         _startHealth = enemy.Health;
         UpdateBarText(_startHealth);
         UpdateBarFilling(_startHealth);
     }
 
-    private void UpdateBarFilling(float Health)
+    public void UpdateBarFilling(float Health)
     {
         _fillBar.fillAmount = (Health / _startHealth);
     }
 
-    private void UpdateBarText(float Health)
+    public void UpdateBarText(float Health)
     {
         _textHP.text = $"({Health} / {_startHealth})";
+    }
+
+    private void SelfDestroy()
+    {
+        Destroy(gameObject);
     }
 }

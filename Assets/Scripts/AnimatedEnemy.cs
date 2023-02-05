@@ -9,7 +9,7 @@ public abstract class AnimatedEnemy : Enemy
     [SerializeField] private AnimationClip _scaleAnimation;
     [SerializeField] private string _parametrName;
 
-    Coroutine _isHitingCoroutine;
+    private Coroutine _isHitingCoroutine;
 
     public Animator Animator => _animator;
     public AnimationClip AnimationClip => _scaleAnimation;

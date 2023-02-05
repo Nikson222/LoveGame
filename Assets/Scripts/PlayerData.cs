@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProperty : MonoBehaviour 
+public static class PlayerData 
 {
     private static int  _money = 0;
     private static int _damage = 1;
@@ -13,19 +13,14 @@ public class PlayerProperty : MonoBehaviour
 
     public static Action<int> OnMoneyChanged;
 
-    private void Start()
-    {
-        Enemy.OnGivePrize += CashReceipt;
-    }
-
-    public void CashReceipt(int amount)
+    public static void CashReceipt(int amount)
     {
         _money += amount;
 
         OnMoneyChanged?.Invoke(Money);
     }
 
-    public void CashWithdrawal(int amount)
+    public static void CashWithdrawal(int amount)
     {
         if (_money >= amount)
             _money -= amount;

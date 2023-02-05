@@ -7,31 +7,32 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class DisplayNeededKills : MonoBehaviour
 {
-    [SerializeField] EnemySpawner _enemySpawner;
-    private static Text _killsText;
+    [SerializeField] KillCounter _killCounter;
+
+    private Text _killsText;
+
     void Start()
     {
-        _enemySpawner = FindObjectOfType<EnemySpawner>();
-        if (_enemySpawner == null)
-            Debug.Log("Spawner null refference int DisplayNeededKills script!");
+        GameManager.InstanceGamemanager.OnUnlockLevel += DisplayUpdate;
+        GameManager.InstanceGamemanager.OnUnlockLevel += UpdateVisibleText;
 
-        GameManager.OnUnlockLevel += DisplayUpdate;
-        GameManager.OnUnlockLevel += UpdateVisibleText;
+        GameManager.InstanceGamemanager.OnLevelChanged += DisplayUpdate;
+        GameManager.InstanceGamemanager.OnLevelChanged += UpdateVisibleText;
 
-        GameManager.OnLevelChanged += DisplayUpdate;
-        GameManager.OnLevelChanged += UpdateVisibleText;
+        _killCounter.OnCounterChanged += DisplayUpdate;
 
         _killsText = GetComponent<Text>();
-        _killsText.text = $"{KillCounter.NeededKillsOnLastLevel - KillCounter.KillCount} need to next level";
+        _killsText.text = $"{_killCounter.NeededKillsOnLastLevel - _killCounter.KillCount} need to next level";
     }
 
-    static public void DisplayUpdate()
+    public void DisplayUpdate()
     {
-        _killsText.text = $"{KillCounter.NeededKillsOnLastLevel - KillCounter.KillCount} need to next level";
+        _killsText.text = $"{_killCounter.NeededKillsOnLastLevel - _killCounter.KillCount} need to next level";
     }
 
     public void UpdateVisibleText()
     {
-        _killsText.gameObject.SetActive(GameManager.MaxAllowedLevel.Equals(GameManager.CurrentLevel) && GameManager.CurrentLevel < GameManager.MaximumExistingLevel-1);
+        _killsText.gameObject.SetActive(GameManager.InstanceGamemanager.MaxAllowedLevel.Equals(GameManager.InstanceGamemanager.CurrentLevel) && 
+            GameManager.InstanceGamemanager.CurrentLevel < GameManager.InstanceGamemanager.MaximumExistingLevel-1);
     }
 }

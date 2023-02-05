@@ -9,8 +9,8 @@ public class MoneyDisplay : MonoBehaviour
 
     private void Start()
     {
-        UpdateMoneyText(PlayerProperty.Money);
-        PlayerProperty.OnMoneyChanged += UpdateMoneyText;    
+        UpdateMoneyText(PlayerData.Money);
+        PlayerData.OnMoneyChanged += UpdateMoneyText;    
     }
 
     private void UpdateMoneyText(int Money)

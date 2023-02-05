@@ -11,13 +11,13 @@ public class LevelSwitch : MonoBehaviour
     private void Start()
     {
         SetInteractable();
-        GameManager.OnLevelChanged += SetInteractable;
-        GameManager.OnUnlockLevel += SetInteractable;
+        GameManager.InstanceGamemanager.OnLevelChanged += SetInteractable;
+        GameManager.InstanceGamemanager.OnUnlockLevel += SetInteractable;
     }
 
     void SetInteractable()
     {
-        ChangeLevelDown.interactable = GameManager.CurrentLevel > 0;
-        ChangeLevelUp.interactable = !GameManager.IsLastLevel;
+        ChangeLevelDown.interactable = GameManager.InstanceGamemanager.CurrentLevel > 0;
+        ChangeLevelUp.interactable = !GameManager.InstanceGamemanager.IsLastLevel;
     }
 }

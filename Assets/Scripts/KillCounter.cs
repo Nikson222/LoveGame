@@ -5,49 +5,46 @@ using UnityEngine;
 
 public class KillCounter : MonoBehaviour
 {
-    private EnemySpawner _spawner;
+    public int NeededKillsOnLastLevel;
 
-    public static int NeededKillsOnLastLevel;
+    public int KillCount = 0;
 
-    public static int KillCount = 0;
+    private EnemySpawner _enemySpawner;
 
-    public static Action OnTaskComleted;
-    
+    public Action OnCounterChanged;
 
     private void Start()
     {
-        _spawner = FindObjectOfType<EnemySpawner>();
-        if (_spawner == null)
-            Debug.Log("Spawner null refference in KillCounter script!");
-
-
-        Enemy.OnDie += AddKillCount;
-        NewTaskForCounter(_spawner.LevelConfigs[GameManager.MaxAllowedLevel].NeedKillsToNextLevel);
-
-        DisplayNeededKills.DisplayUpdate();
+        _enemySpawner = GameManager.InstanceGamemanager._enemySpawner;
+        _enemySpawner.OnSpawn += SubscribeOnEnemy;
+        NewTaskForCounter();
     }
 
+    private void SubscribeOnEnemy(Enemy enemy)
+    {
+        enemy.OnDie += AddKillCount;
+    }
 
     public void AddKillCount()
     {
-        if (GameManager.IsLastLevel && GameManager.CurrentLevel < GameManager.MaximumExistingLevel-1)
+        if (GameManager.InstanceGamemanager.IsLastLevel && GameManager.InstanceGamemanager.CurrentLevel < GameManager.InstanceGamemanager.MaximumExistingLevel - 1)
         {
             KillCount += 1;
-            DisplayNeededKills.DisplayUpdate();
 
             if (KillCount == NeededKillsOnLastLevel)
             {
-                NewTaskForCounter(_spawner.LevelConfigs[GameManager.MaxAllowedLevel].NeedKillsToNextLevel);
-
-                OnTaskComleted();
+                GameManager.InstanceGamemanager.UnlockLevel();
+                NewTaskForCounter();
             }
+
+            OnCounterChanged?.Invoke();
         }
     }
 
-
-    public void NewTaskForCounter(int needKills)
+    public void NewTaskForCounter()
     {
-        NeededKillsOnLastLevel = needKills;
+        NeededKillsOnLastLevel = _enemySpawner.LevelConfigs[GameManager.InstanceGamemanager.MaxAllowedLevel].NeedKillsToNextLevel;
         KillCount = 0;
+        OnCounterChanged?.Invoke();
     }
 }

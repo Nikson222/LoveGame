@@ -6,38 +6,28 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] RawImage rawImage;
+    public static GameManager InstanceGamemanager;
+    
+    [SerializeField] private RawImage backgroundImage;
 
-    private static EnemySpawner _spawner;
-    private LevelSwitch _levelSwitch;
+    [SerializeField] public EnemySpawner _enemySpawner;
 
-    private static int _currentLevel = 0;
-    private static int _maxAllowedLevel = 0;
+    private int _currentLevel = 0;
+    private int _maxAllowedLevel = 0;
 
-    public static int CurrentLevel { get { return _currentLevel; } }
-    public static int MaxAllowedLevel { get { return _maxAllowedLevel; } }
-    public static int MaximumExistingLevel { get { return _spawner.LevelConfigs.Count; } }
+    public int CurrentLevel { get { return _currentLevel; } }
+    public int MaxAllowedLevel { get { return _maxAllowedLevel; } }
+    public int MaximumExistingLevel { get { return _enemySpawner.LevelConfigs.Count; } }
 
-    public static bool IsLastLevel;
+    public bool IsLastLevel;
 
-    public static Action OnLevelChanged;
-    public static Action OnUnlockLevel;
+    public Action OnLevelChanged;
+    public Action OnUnlockLevel;
 
     private void Awake()
     {
-        KillCounter.OnTaskComleted += UnlockLevel;
+        InstanceGamemanager = this;
         IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
-    }
-
-    private void Start()
-    {
-        _spawner = FindObjectOfType<EnemySpawner>();
-        if (_spawner == null)
-            Debug.Log("Spawner null refference int Gamemanager script!");
-
-        _levelSwitch = FindObjectOfType<LevelSwitch>();
-        if (_levelSwitch == null)
-            Debug.Log("_levelSwitch null refference int Gamemanager script!");
     }
 
     public void ChangeLevel(int levelValue)
@@ -45,17 +35,17 @@ public class GameManager : MonoBehaviour
         if (_currentLevel + levelValue <= _maxAllowedLevel && _currentLevel + levelValue >= 0)
         {
             _currentLevel += levelValue;
-            _spawner.ChangeLevel(CurrentLevel);
+            _enemySpawner.ChangeLevel(CurrentLevel);
 
-            if (rawImage != null)
-                rawImage.texture = _spawner.LevelConfigs[CurrentLevel].BackgroundTexture;
+            if (backgroundImage != null)
+                backgroundImage.texture = _enemySpawner.LevelConfigs[CurrentLevel].BackgroundTexture;
 
             IsLastLevel = MaxAllowedLevel.Equals(CurrentLevel);
             OnLevelChanged();
         }
     }
 
-    private void UnlockLevel()
+    public void UnlockLevel()
     {
         if (MaximumExistingLevel > MaxAllowedLevel+1)
         {

@@ -14,18 +14,17 @@ public class EnemySpawner : MonoBehaviour
 
     public List<LevelConfig> LevelConfigs => _levelConfigs;
 
-    public static Action<Enemy> OnSpawn;
+    public Action<Enemy> OnSpawn;
 
     public int CurrentLevel => _currentLevel;
 
     private void Awake()
     {
-        _currentLevel = GameManager.CurrentLevel;
+        _currentLevel = GameManager.InstanceGamemanager.CurrentLevel;
     }
 
     private void Start()
     {
-        Enemy.OnDie += Spawn;
         Spawn();
     }
 
@@ -39,12 +38,14 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(_respawnColldown);
 
         var enemyIndex = UnityEngine.Random.Range(0, _levelConfigs[_currentLevel].Hearthes.Count - 1);
-        var spawnedEnemyObject = Instantiate(_levelConfigs[_currentLevel].Hearthes[enemyIndex], _levelConfigs[_currentLevel].Hearthes[enemyIndex].transform.position, Quaternion.identity);
+        Enemy spawnedEnemy = Instantiate(_levelConfigs[_currentLevel].Hearthes[enemyIndex], _levelConfigs[_currentLevel].Hearthes[enemyIndex].transform.position, Quaternion.identity)
+            .GetComponent<Enemy>();
 
-        spawnedEnemyObject.transform.SetParent(transform, true);
+        spawnedEnemy.transform.SetParent(transform, true);
 
-        Enemy spawnedEnemy = spawnedEnemyObject.GetComponent<Enemy>();
         spawnedEnemy.Init(_levelConfigs[_currentLevel].HealthOfEnemy, _levelConfigs[_currentLevel].PrizeForDestroy);
+
+        spawnedEnemy.OnDie += Spawn;
 
         OnSpawn?.Invoke(spawnedEnemy);
     }
